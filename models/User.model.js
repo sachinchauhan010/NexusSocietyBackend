@@ -14,7 +14,6 @@ const userSchema = new Schema({
   department: { type: String },
   year: { type: Number },
   semester: { type: String },
-  
 });
 
 const User = mongoose.model('User', userSchema );
