@@ -9,7 +9,6 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   phone: { type: String },
   role: [{ type: String, enum: [Role.HEAD_ADMIN, Role.SOCIETY_ADMIN, Role.MEMBER, Role.STUDENT], default: Role.STUDENT }],
-
   id: { type: String },
   department: { type: String },
   year: { type: Number },
