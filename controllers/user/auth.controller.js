@@ -5,7 +5,7 @@ import User from "../../models/User.model.js"
 export const userRegister = async (req, res) => {
 
   try {
-    const { name, email, password, phone, role = "student", id = null, department = null, year = null, semester = null } = req.body;
+    const { name, email, password, phone, role = "student", id = null, department = null, year = null } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({ message: "Fill all the required fields" });
@@ -19,7 +19,7 @@ export const userRegister = async (req, res) => {
     let salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    const newUser = new User({ name, email, password: hashedPassword, phone, role, id, department, year, semester });
+    const newUser = new User({ name, email, password: hashedPassword, phone, role, id, department, year});
 
     const savedUser = await newUser.save();
     if (!savedUser) {
