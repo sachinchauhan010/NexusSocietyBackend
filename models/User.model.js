@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Role } from '../enum/Role.js' 
+import { ROLE } from '../enum/Role.js' 
 
 const { Schema } = mongoose;
 
@@ -8,7 +8,7 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   phone: { type: String },
-  role: [{ type: String, enum: [Role.HEAD_ADMIN, Role.SOCIETY_ADMIN, Role.MEMBER, Role.STUDENT], default: Role.STUDENT }],
+  role: [{ type: String, enum: [ROLE.HEAD_ADMIN, ROLE.SOCIETY_ADMIN, ROLE.MEMBER, ROLE.STUDENT], default: ROLE.STUDENT }],
   id: { type: String },
   department: { type: String },
   year: { type: Number },

@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import User from "../../models/User.model.js"
 import jwt from "jsonwebtoken";
 
+
 export const userRegister = async (req, res) => {
 
   try {
@@ -41,7 +42,6 @@ export const userRegister = async (req, res) => {
 
 export const userLogin = async (req, res) => {
 
-
   try {
 
     const { email, password } = req.body;
@@ -61,13 +61,17 @@ export const userLogin = async (req, res) => {
     }
     const tokenPayload = { name: user.name, email: user.email, role: user.role };
     const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: "7d" });
-
-    res.cookie("token", token, {
-      httpOnly: true, // Prevent access from JavaScript
-      secure: process.env.NODE_ENV === "production", // Only send over HTTPS in production
-      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Allow cross-site requests in production
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    // Set cookie with proper settings
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
+
+    // Also set Authorization header
+    res.setHeader('Authorization', `Bearer ${token}`);
 
     const userResponse = { username: user.name, useremail: user.email, role: user.role }
 
@@ -95,5 +99,24 @@ export const userLogout = async (req, res) => {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong" });
 
+  }
+}
+
+
+export const checkAuth=async(req,res)=>{
+  try {
+    if (!req.cookies.token) {
+      return res.status(400).json({isLogin:false, message: "User is not logged in" });
+    }
+    const token = req.cookies.token;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded) {
+      return res.status(400).json({isLogin:false, message: "Invalid token" });
+    }
+    const userData= {username:decoded.name, useremail: decoded.email, role:decoded.role}
+    return res.status(200).json({isLogin:true, userdata: userData, message: "User is logged in" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({isLogin:false, message: "Something went wrong" });
   }
 }
