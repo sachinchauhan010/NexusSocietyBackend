@@ -8,9 +8,7 @@ const corsOptions = {
   credentials: true,
   origin: ['https://nexussociety.vercel.app', 'http://localhost:5173', 'http://localhost:5174'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],  // Add 'Cookie' to allowed headers
-  exposedHeaders: ['set-cookie'],  // Add this line
-  preflightContinue: false,
+  // preflightContinue: true,
   optionsSuccessStatus: 200
 }
 
