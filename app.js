@@ -7,13 +7,11 @@ const app = express();
 const corsOptions = {
   credentials: true,
   origin: ['https://nexussociety.vercel.app', 'http://localhost:5173', 'http://localhost:5174'],
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
-  exposedHeaders: ['Set-Cookie', 'Authorization'],
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],  // Add 'Cookie' to allowed headers
+  exposedHeaders: ['set-cookie'],  // Add this line
   preflightContinue: false,
-  optionsSuccessStatus: 200,
-  sameSite: 'none',
-  secure: process.env.NODE_ENV === 'production'
+  optionsSuccessStatus: 200
 }
 
 app.use(cors(corsOptions));
