@@ -2,9 +2,6 @@ import express, { urlencoded } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
 import authRoutes from './routes/auth.js';
-// import { ROLE } from './enum/Role.js';
-// import authoriseRoute from './middlewares/authorise.js';
-import societyRoutes from './routes/society.js';
 
 const app = express();
 const corsOptions = {
@@ -24,14 +21,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
-  console.log(req.cookies, "$$$$$$$$$$$$$$$$$$$$")
-  next();
-});
-
 
 app.use('/api/auth', authRoutes);
-app.use('/api/society', societyRoutes);
 
 app.get('/', (req, res) => {
   res.send("Backend is up and running")
