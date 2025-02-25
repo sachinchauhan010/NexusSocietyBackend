@@ -1,14 +1,14 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.model.js"
 import jwt from "jsonwebtoken";
-
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export const userRegister = async (req, res) => {
-
   try {
-    const { name, email, password, phone, role = "student", id = null, department = null, year = null } = req.body;
+    const profileImageLocalPath = req.file ? req.file.path : null;
+    const { name, email, password, phone, role = "student", id, course=null, department, year = null } = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !phone || !id || !department) {
       return res.status(400).json({ message: "Fill all the required fields" });
     }
 
@@ -17,10 +17,22 @@ export const userRegister = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
+    if(!profileImageLocalPath){
+      return res.status(400).json({ message: "Profile image is required" });  
+    }
+
+    const {url} = await uploadOnCloudinary(profileImageLocalPath);
+    if (!url) {
+      return res.status(500).json({
+        success: false,
+        message: "File is not uploaded on Cloudinary",
+      })
+    }
+
     let salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    const newUser = new User({ name, email, password: hashedPassword, phone, role, id, department, year });
+    const newUser = new User({ name, email, password: hashedPassword, phone, role, id, course, department, year, profileimage: url });
 
     const savedUser = await newUser.save();
     if (!savedUser) {
@@ -40,6 +52,7 @@ export const userRegister = async (req, res) => {
 
 
 export const userLogin = async (req, res) => {
+  console.log(req.body,"Called")
 
   try {
 
