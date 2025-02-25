@@ -43,3 +43,19 @@ export const createEvent = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 }
+
+
+export const getEvent = async (req, res) => {
+  try {
+    const allEvents = await Event.find();
+    if (!allEvents) {
+      return res.status(400).json({ message: "No event found" });
+    }
+
+    return res.status(200).json({ events: allEvents });
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+}

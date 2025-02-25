@@ -14,11 +14,18 @@ export const getMembership = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 }
+
+
 export const addMember = async (req, res) => {
   const { name, rollno, course, email } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({
+      $or: [
+        { email },
+        { rollno}
+      ]
+    });
 
     if (!user) {
       return res.status(400).json({ message: "User has no membership" });
