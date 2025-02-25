@@ -2,6 +2,7 @@ import express, { urlencoded } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
 import authRoutes from './routes/auth.js';
+import eventRoutes from './routes/event.js';
 
 const app = express();
 const corsOptions = {
@@ -19,6 +20,7 @@ app.use(urlencoded({ extended: true }));
 
 
 app.use('/api/auth', authRoutes);
+app.use('/api/event', eventRoutes);
 
 app.get('/', (req, res) => {
   res.send("Backend is up and running")
