@@ -56,7 +56,8 @@ export const addMember = async (req, res) => {
 
 export const getMember= async (req, res) => {
   try {
-    const allmembers = await User.find().select('-password');
+    const allmembers = await User.find({ role: { $in: ["member"] } }).select('-password');
+
     if (!allmembers) {
       return res.status(400).json({ message: "No member found" });
     }
