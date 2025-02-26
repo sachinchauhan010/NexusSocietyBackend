@@ -11,6 +11,7 @@ const userSchema = new Schema({
   role: [{ type: String, enum: [ROLE.ADMIN, ROLE.MEMBER, ROLE.STUDENT], default: ROLE.STUDENT }],
   id: { type: String, required: true },
   course: { type: String },
+  branch: { type: String },
   department: { type: String, required: true },
   year: { type: String },
   profileimage: { type: String },

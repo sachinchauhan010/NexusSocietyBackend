@@ -6,7 +6,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 export const userRegister = async (req, res) => {
   try {
     const profileImageLocalPath = req.file ? req.file.path : null;
-    const { name, email, password, phone, role = "student", id, course=null, department, year = null } = req.body;
+    const { name, email, password, phone, role = "student", id, course=null, branch=null, department, year = null } = req.body;
 
     if (!name || !email || !password || !phone || !id || !department) {
       return res.status(400).json({ message: "Fill all the required fields" });
@@ -32,7 +32,7 @@ export const userRegister = async (req, res) => {
     let salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    const newUser = new User({ name, email, password: hashedPassword, phone, role, id, course, department, year, profileimage: url });
+    const newUser = new User({ name, email, password: hashedPassword, phone, role, id, course,branch, department, year, profileimage: url });
 
     const savedUser = await newUser.save();
     if (!savedUser) {
