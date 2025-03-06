@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-export default function authorizeRoute(requiredRole) {
+export default function (requiredRole) {
   return (req, res, next) => {
     console.log('Authorization Middleware - Headers:', req.headers);
     console.log('Authorization Middleware - Cookies:', req.cookies);

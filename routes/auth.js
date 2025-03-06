@@ -3,6 +3,9 @@ import { userLogin, userRegister, userLogout, checkAuth } from '../controllers/a
 import { getRole } from "../utils/getRole.js";
 import { addMember, getMember, getMembership } from "../controllers/member.controller.js";
 import {upload} from "../utils/multer.js"
+import authorizeRoute from "../middlewares/authorise.js";
+
+
 const router = Router();
 router.post('/user/register', upload.single('userprofile'), userRegister);
 router.post('/user/login', userLogin);
@@ -11,8 +14,8 @@ router.get('/user/check-auth', checkAuth);
 router.get('/user/role', getRole);
 
 
-router.post('/user/add-members', addMember);
-router.get('/user/members', getMember);
-router.get('/user/membership', getMembership);
+router.post('/admin/add-members',authorizeRoute("admin") ,addMember);
+router.get('/admin/members', getMember);
+router.get('/admin/membership', getMembership);
 
 export default router;
