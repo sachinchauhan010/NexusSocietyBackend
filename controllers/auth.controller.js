@@ -33,6 +33,7 @@ export const userRegister = async (req, res) => {
     const hashedPassword = bcrypt.hashSync(password, salt);
 
     const newUser = new User({ name, email, password: hashedPassword, phone, role, id, course,branch, department, year, profileimage: url });
+    
 
     const savedUser = await newUser.save();
     if (!savedUser) {

@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken';
 
 export default function (requiredRole) {
   return (req, res, next) => {
-    console.log('Authorization Middleware - Headers:', req.headers);
-    console.log('Authorization Middleware - Cookies:', req.cookies);
+    // console.log('Authorization Middleware - Headers:', req.headers);
+    // console.log('Authorization Middleware - Cookies:', req.cookies);
 
     const token = req.cookies?.token;
 
@@ -17,9 +17,8 @@ export default function (requiredRole) {
 
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log('Decoded token:', decoded);
 
-      if (decoded.role === requiredRole) {
+      if (decoded.role.includes(requiredRole)) {
         req.user = decoded;
         next();
       } else {
