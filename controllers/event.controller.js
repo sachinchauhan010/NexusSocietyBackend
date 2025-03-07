@@ -5,9 +5,8 @@ export const createEvent = async (req, res) => {
 
   try {
     const eventImageLocalPath = req.file ? req.file.path : null;
-    const { name, id, description, venue, dc_team, participants, registration_link=null, start_time, end_time,start_date,end_date } = req.body;
-    console.log(start_date, end_date, "&&&&&&&")
-    if (!name || !id || !description || !venue || !dc_team || !participants || !start_date || !end_date || !start_time || !end_time) {
+    const { name, id, description, venue, participants, registration_link=null, start_time, end_time,start_date,end_date } = req.body;
+    if (!name || !id || !description || !venue || !participants || !start_date || !end_date || !start_time || !end_time) {
       return res.status(400).json({ message: "Fill all the required fields" });
     }
 
@@ -27,10 +26,7 @@ export const createEvent = async (req, res) => {
       })
     }
 
-    const parsedStartDate = new Date(start_date);
-    const parsedEndDate = new Date(end_date);
-
-    const newEvent = new Event({ name, id, description, venue, dc_team, participants, registration_link, start_date, end_date, start_time, end_time, banner:url });
+    const newEvent = new Event({ name, id, description, venue, participants, registration_link, start_date, end_date, start_time, end_time, banner:url });
 
     const savedEvent = await newEvent.save();
     if (!savedEvent) {

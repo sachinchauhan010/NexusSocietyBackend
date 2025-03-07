@@ -7,7 +7,7 @@ const eventSchema= new Schema({
   id:{type: String, required:true},
   description:{type: String, required:true},
   venue:{type: String, required:true},
-  dc_team:{type: Array, required:true},
+  dc_team:{type: Array},
   participants: {type: Number, required:true},
   registration_link:{type: String},
   start_time:{type: String, required: true},
