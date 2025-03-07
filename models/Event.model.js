@@ -10,9 +10,10 @@ const eventSchema= new Schema({
   dc_team:{type: Array, required:true},
   participants: {type: Number, required:true},
   registration_link:{type: String},
-  date:{type:Date, required:true},
   start_time:{type: String, required: true},
   end_time:{type: String, required: true},
+  start_date:{type: String, required: true},
+  end_date:{type: String, required: true},
   banner:{type: String, required:true},
 })
 

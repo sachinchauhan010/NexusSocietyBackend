@@ -5,6 +5,6 @@ import { createEvent, getEvent } from "../controllers/event.controller.js";
 
 const router = Router();
 router.post('/create-event', upload.single('banner'), createEvent);
-router.get('/get-event', getEvent);
+router.get('/get-events', getEvent);
 
 export default router;
