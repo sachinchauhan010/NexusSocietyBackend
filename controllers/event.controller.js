@@ -59,13 +59,14 @@ export const getEvent = async (req, res) => {
 
 
 export const getEventById = async (req, res) => {
+
   try {
     const { id } = req.params;
-    const event = await Event.findOne({id}); // Use findById instead of findOne
+    const event = await Event.findOne({id});
     if (!event) {
       return res.status(404).json({ message: "Event not found" });
     }
-    return res.status(200).json(event); // Send event directly without extra nesting
+    return res.status(200).json({ eventData: event, message: "Event fetched successfully" }); // Send event directly without extra nesting
   } catch (error) {
     console.error("Error fetching event:", error);
     return res.status(500).json({ message: "Something went wrong" });
