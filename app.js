@@ -3,6 +3,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors'
 import authRoutes from './routes/auth.js';
 import eventRoutes from './routes/event.js';
+import noticeRoutes from './routes/notice.js';
+
 
 const app = express();
 const corsOptions = {
@@ -21,6 +23,7 @@ app.use(urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/event', eventRoutes);
+app.use('/api/notice', noticeRoutes);
 
 app.get('/', (req, res) => {
   res.send("Backend is up and running")
